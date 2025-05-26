@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import ReplyIcon from '@mui/icons-material/Reply';
+import ReplyIcon from '@mui/icons-material/Reply';  // Importing ReplyIcon
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5050/api/posts';
@@ -155,29 +155,43 @@ export default function App() {
           {posts.map((post) => (
             <div key={post.id}>
               <ListItem
-                secondaryAction={
-                  <>
-                    <IconButton edge="end" aria-label="reply" onClick={() => openReplyDialog(post.id)}>
-                      <ReplyIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="edit" onClick={() => openEditDialog(post)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(post.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                }
+                sx={{
+                  display: 'flex', // Use flexbox to align content horizontally
+                  flexDirection: 'column', // Stack items vertically
+                  paddingBottom: 2, // Padding to separate posts
+                }}
               >
-                <ListItemText
-                  primary={`${post.username}:`}
-                  secondary={post.message}
-                />
+                
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                    {post.username}:
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                  <IconButton edge="end" aria-label="edit" onClick={() => openEditDialog(post)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(post.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton edge="end" aria-label="reply" onClick={() => openReplyDialog(post.id)}>
+                    <ReplyIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+
+                {/* Message */}
+                <Box sx={{ paddingLeft: 3, width: '100%' }}>
+                  <ListItemText
+                    secondary={post.message}
+                  />
+                </Box>
               </ListItem>
 
               {/* Render Replies */}
               {post.replies && post.replies.map((reply, index) => (
-                <ListItem key={index} sx={{ paddingLeft: 4 }}>
+                <ListItem key={index} sx={{ paddingLeft: 6 }}>
                   <ListItemText
                     primary={`${reply.username}:`}
                     secondary={reply.message}
