@@ -257,6 +257,31 @@ export default function App() {
                 </Box>
               </ListItem>
 
+              {replyPostId === post.id && (
+  <Box sx={{ paddingLeft: 6, mt: 1 }}>
+    <form onSubmit={handleReplySubmit}>
+      <TextField
+        label="Reply"
+        value={replyMessage}
+        onChange={(e) => setReplyMessage(e.target.value)}
+        fullWidth
+        multiline
+        minRows={2}
+        required
+      />
+      <Box mt={1} textAlign="right">
+        <Button type="submit" variant="outlined" size="small" sx={{ mr: 1 }}>
+          Send Reply
+        </Button>
+        <Button variant="text" size="small" onClick={() => setReplyPostId(null)}>
+          Cancel
+        </Button>
+      </Box>
+    </form>
+  </Box>
+)}
+
+
               {/* Render Replies */}
               {post.replies && post.replies.map((reply, index) => (
                 <ListItem key={index} sx={{ paddingLeft: 6 }}>
